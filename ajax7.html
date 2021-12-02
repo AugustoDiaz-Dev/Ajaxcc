@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Ajax 7 - Ajax & PHP Forms -POST-</title>
+</head>
+<body>
+    <div class="container">
+        <h1>Ajax 7 - Ajax & PHP Forms -POST-</h1>
+        <button id="button">Get name</button>
+        <hr>
+        <h2>POST FORM</h2>
+        <form action="process_post.php" method="POST">
+            <input type="text" name="name">
+            <input type="submit" value="Submit">
+        </form>
+
+        <h2>AJAX POST FORM</h2>
+        <div id="ajax"></div>
+        <form id="postForm">
+            <input type="text" name="name" id="name2">
+            <input type="submit" value="Submit">
+        </form>
+
+    </div>
+
+    <script>
+        document.getElementById('button').addEventListener('click', postName);
+        document.getElementById('postForm').addEventListener('submit', postName1);
+
+        function postName() {
+            var xhr = new XMLHttpRequest();
+
+            xhr.open('POST', 'process_post.php?name=Augusto', true);
+
+            xhr.onload = function() {
+                    console.log(this.responseText);
+            }
+            xhr.send();
+        }
+
+        function postName1(e) {
+            e.preventDefault();
+            
+            var name = document.getElementById('name2').value;
+            var params = "name="+name;
+
+            var xhr = new XMLHttpRequest();
+
+            xhr.open('POST', 'process_post.php', true);
+            // Add setRequestHeader for POST
+            xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+
+            xhr.onload = function () {
+                console.log(this.responseText);
+                var response = this.responseText;
+                document.getElementById('ajax').innerHTML = response;
+            }
+
+            xhr.send(params);
+        }
+
+    </script>
+</body>
+</html>

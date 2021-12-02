@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Ajax 6 - Ajax & PHP Forms -GET-</title>
+</head>
+<body>
+    <div class="container">
+        <h1>Ajax 6 - Ajax & PHP Forms -GET-</h1>
+        <button id="button">Get name</button>
+        <hr>
+        <h2>GET FORM</h2>
+        <form action="process_get.php" method="GET">
+            <input type="text" name="name">
+            <input type="submit" value="Submit">
+        </form>
+
+        <h2>AJAX GET FORM</h2>
+        <div id="ajax"></div>
+        <form id="getForm">
+            <input type="text" name="name" id="name1">
+            <input type="submit" value="Submit">
+        </form>
+
+    </div>
+
+    <script>
+        document.getElementById('button').addEventListener('click', getName);
+        document.getElementById('getForm').addEventListener('submit', getName1);
+
+        function getName() {
+            var xhr = new XMLHttpRequest();
+
+            xhr.open('GET', 'process_get.php?name=Augusto', true);
+
+            xhr.onload = function() {
+                    console.log(this.responseText);
+            }
+            xhr.send();
+        }
+
+        function getName1(e) {
+            e.preventDefault();
+            
+            var name = document.getElementById('name1').value;
+
+            var xhr = new XMLHttpRequest();
+
+            xhr.open('GET', 'process_get.php?name='+name, true);
+
+            xhr.onload = function () {
+                console.log(this.responseText);
+                var response = this.responseText;
+                document.getElementById('ajax').innerHTML = response;
+            }
+
+            xhr.send();
+        }
+
+    </script>
+</body>
+</html>

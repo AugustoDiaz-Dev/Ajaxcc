@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style.css" />
+    <style>
+        .user {
+            display: flex;
+            padding: 15px;
+            margin-bottom: 10px;
+            border: 2px solid white;
+            min-width: 300px;
+        }
+    </style>
+    <title>Ajax 9 - Fetch from the database</title>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Ajax 9 - Fetch from the database</h1>
+      <button id="button">Fetch data from DB</button>
+      <hr>
+      <h2>Received data</h2>
+      <div id="users"></div>
+    </div>
+
+    <script>
+        document.getElementById('button').addEventListener('click', loadUsers);
+
+        // LOAD USERS
+        function loadUsers() {
+        var xhr = new XMLHttpRequest();
+
+        xhr.open("GET", "users.php", true);
+
+        xhr.onload = function () {
+          if (this.status == 200) {
+            var users = JSON.parse(this.responseText);
+
+            var output = "";
+
+            for(var i in users) {
+              output += 
+            "<ul>" + 
+              "<li>ID: " + users[i].id + " </li>" +
+              "<li>NAME: " + users[i].name + " </li>" +
+            "</ul>"; 
+          }
+            document.getElementById("users").innerHTML = output;
+        }
+      }
+        xhr.send();
+      }
+    </script>
+  </body>
+</html>
